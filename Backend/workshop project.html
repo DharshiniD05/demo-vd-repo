@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>0 → Shipped · Resume Parser</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- pdf.js parses the PDF entirely in the browser - no backend -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="nav">
+    <div class="logo">0 <span class="arrow">→</span> Shipped</div>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="#skills">Skills tracked</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Your resume, scored in <span class="accent">seconds</span></h1>
+      <p>
+        Drop in a PDF and get an instant score, the skills recruiters can see,
+        and the ones they can't. Everything runs in your browser — your resume
+        never leaves your machine.
+      </p>
+    </section>
+
+    <!-- Upload state -->
+    <section id="uploadCard" class="card">
+      <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload resume PDF">
+        <div class="dropzone-icon">📄</div>
+        <p class="dropzone-title">Drag &amp; drop your resume</p>
+        <p class="dropzone-sub">or click to browse — PDF only</p>
+        <input id="fileInput" type="file" accept="application/pdf" hidden />
+      </div>
+      <button id="demoBtn" class="btn-ghost" type="button">No PDF handy? Try a sample resume</button>
+      <p id="uploadError" class="error hidden" aria-live="polite"></p>
+    </section>
+
+    <!-- Analyzing state -->
+    <section id="analyzingCard" class="card hidden">
+      <div class="spinner"></div>
+      <p id="analyzingStep" class="analyzing-step" aria-live="polite">Reading PDF…</p>
+    </section>
+
+    <!-- Results state -->
+    <section id="resultsCard" class="card hidden">
+      <div class="results-head">
+        <div class="score-block">
+          <div class="ring">
+            <svg viewBox="0 0 120 120" width="140" height="140">
+              <circle class="ring-bg" cx="60" cy="60" r="52" />
+              <circle id="ringFill" class="ring-fill" cx="60" cy="60" r="52" />
+            </svg>
+            <div class="ring-label">
+              <span id="scoreValue">0</span><span class="score-of">/100</span>
+            </div>
+          </div>
+          <div class="verdict">
+            <span id="verdictLabel" class="verdict-label">—</span>
+            <span id="verdictSub" class="verdict-sub"></span>
+          </div>
+        </div>
+        <div class="stats-block">
+          <div class="stat">
+            <span id="statPresent" class="stat-num">0</span>
+            <span class="stat-label">skills found</span>
+          </div>
+          <div class="stat">
+            <span id="statMissing" class="stat-num">0</span>
+            <span class="stat-label">skills missing</span>
+          </div>
+          <button id="resetBtn" class="btn" type="button">Analyze another</button>
+        </div>
+      </div>
+
+      <div class="skill-columns">
+        <div class="skill-col">
+          <h3 class="col-title present-title">✓ Skills present</h3>
+          <div id="presentList" class="chips"></div>
+        </div>
+        <div class="skill-col">
+          <h3 class="col-title missing-title">✗ Skills missing</h3>
+          <div id="missingList" class="chips"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how" class="how">
+      <h2>How it works</h2>
+      <div class="steps">
+        <div class="step"><span class="step-num">1</span><p>Upload a PDF resume — parsing happens locally via pdf.js.</p></div>
+        <div class="step"><span class="step-num">2</span><p>The text is scanned against a dictionary of common tech skills.</p></div>
+        <div class="step"><span class="step-num">3</span><p>You get a score plus a present/missing skills breakdown.</p></div>
+      </div>
+    </section>
+
+    <!-- Skills tracked -->
+    <section id="skills" class="tracked">
+      <h2>Skills tracked</h2>
+      <div id="trackedList" class="chips chips-static"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>0 → Shipped · Resume Parser — a mock design. Scores are indicative, not gospel.</p>
+  </footer>
+</body>
+</html>
